@@ -22,7 +22,7 @@ public class HomeActivity extends AppCompatActivity {
 private GridView gv_home;
     private  long mExitTime;
     private SharedPreferences msharedPreferences;
-    @Override
+    
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home2);
