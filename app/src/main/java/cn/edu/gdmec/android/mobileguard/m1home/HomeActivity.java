@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import cn.edu.gdmec.android.mobileguard.R;
 import cn.edu.gdmec.android.mobileguard.m1home.adapter.HomeAdapter;
+import cn.edu.gdmec.android.mobileguard.m2theftguard.LostFindActivity;
 import cn.edu.gdmec.android.mobileguard.m2theftguard.dialog.InterPasswordDialog;
 import cn.edu.gdmec.android.mobileguard.m2theftguard.dialog.SetUpPasswordDialog;
 import cn.edu.gdmec.android.mobileguard.m2theftguard.utils.MD5Utils;
@@ -108,7 +109,7 @@ private void showInterPswdDialog(){
             }else if(password.equals(MD5Utils.encode(mInPswdDialog.getPassword()))){
                 mInPswdDialog.dismiss();
 
-                //startActivity(LostFindActivity.class);
+                startActivity(LostFindActivity.class);
                 Toast.makeText(HomeActivity.this,"可以进入手机防盗模块",Toast.LENGTH_LONG).show();
             }else{
                 mInPswdDialog.dismiss();
