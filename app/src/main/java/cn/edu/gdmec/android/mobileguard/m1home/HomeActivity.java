@@ -117,7 +117,7 @@ private void showInterPswdDialog(){
     final String password=getPassword();
     final InterPasswordDialog mInPswdDialog=new InterPasswordDialog(HomeActivity.this);
     mInPswdDialog.setCallBack (new InterPasswordDialog.MyCallBack(){
-        @Override
+       
         public void confirm(){
             if(TextUtils.isEmpty(mInPswdDialog.getPassword())){
                 Toast.makeText(HomeActivity.this, "密码不能为空!",0).show();
