@@ -75,7 +75,7 @@
 
     <Button
         android:id="@+id/add_fromcontact_btn"
-        android:layout_width="170dp"
+        android:layout_width="168dp"
         android:layout_height="40dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"

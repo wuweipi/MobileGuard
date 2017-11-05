@@ -56,6 +56,7 @@ public class AddBlackNumberActivity extends AppCompatActivity implements View.On
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_add_black_number);
         dao = new BlackNumberDao(AddBlackNumberActivity.this);
         initView();

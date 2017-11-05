@@ -29,7 +29,7 @@ public class SecurityPhoneActivity extends AppCompatActivity implements View.OnC
     private BlackNumberDao dao;
     private ListView mListView;
     private int pagenumber = 0;
-    private int pagesize = 4;
+    private int pagesize = 999;
     private int totalNumber;
     private List<BlackContactInfo> pageBlackNumber = new ArrayList<BlackContactInfo>();
     private BlackContactAdapter adapter;
@@ -99,6 +99,7 @@ public class SecurityPhoneActivity extends AppCompatActivity implements View.OnC
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_security_phone);
         initView();
         fillData();

@@ -65,7 +65,7 @@ public class ContactSelectActivity extends AppCompatActivity implements View.OnC
                 ContactInfo item=(ContactInfo)adapter.getItem(position);
                 Intent intent=new Intent();
                 intent.putExtra("phone",item.phone);
-                intent.putExtra("name",item.phone);
+                intent.putExtra("name",item.name);
                 setResult(0,intent);
                 finish();
             }

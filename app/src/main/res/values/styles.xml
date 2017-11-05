@@ -26,7 +26,5 @@
         <item name="android:textSize">14sp</item>
         <item name="android:gravity">center_vertical</item>
     </style>
-    <style name="NOTitle" parent="@style/Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowNoTitle">true</item>
-    </style>
+
 </resources>
