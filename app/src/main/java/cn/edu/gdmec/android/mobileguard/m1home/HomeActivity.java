@@ -21,6 +21,7 @@ import cn.edu.gdmec.android.mobileguard.m2theftguard.dialog.InterPasswordDialog;
 import cn.edu.gdmec.android.mobileguard.m2theftguard.dialog.SetUpPasswordDialog;
 import cn.edu.gdmec.android.mobileguard.m2theftguard.receiver.MyDeviceAdminReceiver;
 import cn.edu.gdmec.android.mobileguard.m2theftguard.utils.MD5Utils;
+import cn.edu.gdmec.android.mobileguard.m3communicationguard.SecurityPhoneActivity;
 
 public class HomeActivity extends AppCompatActivity {
 private GridView gv_home;
@@ -49,7 +50,9 @@ private GridView gv_home;
                             showSetUpPswdDialog();
                         }
                         break;
-
+                    case 1:
+                        startActivity(SecurityPhoneActivity.class);
+                        break;
                 }
             }
         });
@@ -117,7 +120,7 @@ private void showInterPswdDialog(){
     final String password=getPassword();
     final InterPasswordDialog mInPswdDialog=new InterPasswordDialog(HomeActivity.this);
     mInPswdDialog.setCallBack (new InterPasswordDialog.MyCallBack(){
-       
+
         public void confirm(){
             if(TextUtils.isEmpty(mInPswdDialog.getPassword())){
                 Toast.makeText(HomeActivity.this, "密码不能为空!",0).show();
