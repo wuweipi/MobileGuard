@@ -20,7 +20,6 @@ import cn.edu.gdmec.android.mobileguard.m4appmanager.utils.DensityUtil;
 import cn.edu.gdmec.android.mobileguard.m4appmanager.utils.EngineUtils;
 
 
-
 public class AppManagerAdapter extends BaseAdapter {
     private List<AppInfo> UserAppInfos;
     private List<AppInfo> SystemAppInfos;
@@ -110,8 +109,8 @@ public class AppManagerAdapter extends BaseAdapter {
                     .findViewById(R.id.tv_share_app);
             viewHolder.mUninstallTV = (TextView) view
                     .findViewById(R.id.tv_uninstall_app);
-            viewHolder.mAppOptionLL=(LinearLayout)view
-                    .findViewById(R.id.ll_option_app);
+            viewHolder.mAboutAppTV=(TextView)view
+                    .findViewById(R.id.tv_about_app);
             view.setTag(viewHolder);
         }
         if (appInfo != null){

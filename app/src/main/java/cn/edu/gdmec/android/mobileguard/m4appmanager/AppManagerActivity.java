@@ -38,7 +38,7 @@ public class AppManagerActivity extends AppCompatActivity implements View.OnClic
     private List<AppInfo> systemAppInfos = new ArrayList<AppInfo>();
     private AppManagerAdapter adapter;
     private TextView mAppNumTV;
-    
+
     private UninstallReceiver receiver;
 
     private Handler mHandler = new Handler(){
