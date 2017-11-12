@@ -205,6 +205,10 @@ public class AppManagerAdapter extends BaseAdapter {
                     }
                     EngineUtils.uninstallApplication(context, appInfo);
                     break;
+                case R.id.tv_about_app:
+                    //设置应用
+                    EngineUtils.showAboutDialog(context,appInfo);
+                    break;
             }
         }
     }
