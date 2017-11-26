@@ -66,7 +66,7 @@ public class VirusScanActivity extends AppCompatActivity implements View.OnClick
         ImageView mLeftImgv=(ImageView)findViewById(R.id.imgv_leftbtn);
         findViewById(R.id.rl_allscanvirus).setOnClickListener(this);
     }
-    
+
     public void onClick(View view){
         switch(view.getId()){
             case R.id.imgv_leftbtn:
