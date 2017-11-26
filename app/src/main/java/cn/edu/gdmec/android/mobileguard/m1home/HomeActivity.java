@@ -52,6 +52,7 @@ private GridView gv_home;
                         }else{
                             showSetUpPswdDialog();
                         }
+                        //
                         break;
                     case 1:
                         startActivity(SecurityPhoneActivity.class);
