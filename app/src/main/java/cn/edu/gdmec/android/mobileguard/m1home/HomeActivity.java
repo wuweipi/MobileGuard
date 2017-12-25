@@ -81,7 +81,7 @@ private GridView gv_home;
         startActivity(intent);
     }
 
-@Override
+
 public boolean onKeyDown(int keyCode, KeyEvent event){
     if(keyCode==KeyEvent.KEYCODE_BACK){
         if((System.currentTimeMillis()-mExitTime)<2000){
