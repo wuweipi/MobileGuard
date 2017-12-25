@@ -10,26 +10,21 @@ import android.widget.Toast;
 
 import cn.edu.gdmec.android.mobileguard.m4appmanager.entity.AppInfo;
 
-/**
- * Created by Administrator on 2017/11/5.
- */
+
 
 public class EngineUtils {
-        /*
-        * 分享应用
-        * */
     public static void shareApplication(Context context, AppInfo appInfo){
         Intent intent = new Intent("android.intent.action.SEND");
         intent.addCategory("android.intent.category.DEFAULT");
         intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_TEXT,"推荐您使用一款软件，名称叫"+appInfo.appName+"下载路径：https://play.google.com/store/apps/details?id="+appInfo.packageName);
+        intent.putExtra(Intent.EXTRA_TEXT,
+                "推荐您使用一款软件，名称叫:" + appInfo.appName
+                    + "下载路径:https://play.google.com/store/apps/details?id="
+                    + appInfo.packageName);
         context.startActivity(intent);
     }
-         /*
-        * 开启应用程序
-        * */
+
     public static void startApplication(Context context,AppInfo appInfo){
-        //打开这个应用程序的入口activity
         PackageManager pm = context.getPackageManager();
         Intent intent = pm.getLaunchIntentForPackage(appInfo.packageName);
         if (intent != null){
@@ -37,58 +32,51 @@ public class EngineUtils {
         }else {
             Toast.makeText(context, "该应用没有启动界面", Toast.LENGTH_SHORT).show();
         }
-
     }
-    /*
-     * 开启应用设置页面
-     * */
-    public static void SettingAppDetail(Context context,AppInfo appInfo){
+
+    public static void SettingAppDetail(Context context, AppInfo appInfo){
         Intent intent = new Intent();
         intent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
         intent.addCategory(Intent.CATEGORY_DEFAULT);
-        intent.setData(Uri.parse("package:"+appInfo.packageName));
+        intent.setData(Uri.parse("package:" + appInfo.packageName));
         context.startActivity(intent);
     }
 
-    public static void uninstallApplication(Context context,AppInfo appInfo){
+    public static void uninstallApplication(Context context, AppInfo appInfo){
         if (appInfo.isUserApp){
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_DELETE);
-            intent.setData(Uri.parse("package:"+appInfo.packageName));
+            intent.setData(Uri.parse("package:" + appInfo.packageName));
             context.startActivity(intent);
         }else {
-            Toast.makeText(context, "系统应用无法卸载", Toast.LENGTH_LONG).show();
+            Toast.makeText(context,"系统应用无法卸载",Toast.LENGTH_LONG).show();
         }
     }
 
-    public static void AbouticonAppDetail(Context context,AppInfo appInfo){
-        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle(appInfo.appName);
-        builder.setMessage("Version："+appInfo.version+
-                            "\nInstall time："+appInfo.installTime+
-                                "\nCertificate issuer："+appInfo.certifi+
-                                    "\n\nPermissions："+appInfo.permisstion);
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+    public static void showAboutDialog(Context context, AppInfo appInfo){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("MobileGuard");	    //设置对话框标题
+        builder.setMessage("Version："+"1.2"+"\nInstall time："+"2017年11月12日下午21:33:00"
+                +"\nCertificate issuer："+"CN=York Cui,OU=Computer&Design College,O=Guangdong Mechanical" +
+                "&Electrical Polytechnic,L=Guangzhou,ST=Guangdong,C=CN"
+                +"\nPermissions："+"\nandroid.permission.INTERNET"+"\nandroid.permission.WRITE_EXTERNAL_STORAGE"
+        +"\nandroid.permission.READ+PHONE_STATE"+"\nandroid.permission.RECEIVE_BOOT_COMP;ETED"
+        +"\nandroid.permission.PEAD_CONTACTS");
+
+        builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case AlertDialog.BUTTON_POSITIVE:// "确认"按钮退出程序
+
+                        break;
+                }
             }
         });
-        AlertDialog dialog =  builder.create();
+        AlertDialog dialog = builder.create();	//创建对话框
         dialog.show();
+
     }
 
-    public static void ActivityInfoDetail(Context context, AppInfo appInfo) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle(appInfo.appName);
-        builder.setMessage("activities:"+appInfo.activityInfo);
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-            }
-        });
-        AlertDialog dialog =  builder.create();
-        dialog.show();
-    }
 }
