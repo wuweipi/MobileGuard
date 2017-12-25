@@ -1,12 +1,11 @@
 package cn.edu.gdmec.android.mobileguard.m1home.entity;
 
-/**
- * Created by 天地科技 on 2017/10/16.
- */
-
+//记录版本信息的类
 public class VersionEntity {
+    /*服务器版本号*/
     public String versioncode;
+    /*版本描述*/
     public String description;
-    public  String apkurl;
-    public String versionCode;
+    /*apk下载地址*/
+    public String apkurl;
 }

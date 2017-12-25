@@ -20,17 +20,15 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import cn.edu.gdmec.android.mobileguard.R;
 import cn.edu.gdmec.android.mobileguard.m4appmanager.adapter.AppManagerAdapter;
 import cn.edu.gdmec.android.mobileguard.m4appmanager.entity.AppInfo;
 import cn.edu.gdmec.android.mobileguard.m4appmanager.utils.AppInfoParser;
 
-
-public class AppManagerActivity extends AppCompatActivity implements View.OnClickListener{
-    /** 手机剩余内存TextView */
+public class AppManagerActivity extends AppCompatActivity implements View.OnClickListener {
+    /*手机剩余内纯的Textviwe*/
     private TextView mPhoneMemoryTV;
-    /** 展示SD卡剩余内存TextView */
+    /*展示SD卡剩余内存Textview*/
     private TextView mSDMemoryTV;
     private ListView mListView;
     private List<AppInfo> appInfos;
@@ -38,17 +36,15 @@ public class AppManagerActivity extends AppCompatActivity implements View.OnClic
     private List<AppInfo> systemAppInfos = new ArrayList<AppInfo>();
     private AppManagerAdapter adapter;
     private TextView mAppNumTV;
-
-    private UninstallReceiver receiver;
+    private UninstallRececiver receciver;
 
     private Handler mHandler = new Handler(){
-
+        @Override
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case 10:
                     if (adapter == null){
-                        adapter = new AppManagerAdapter(userAppInfos, systemAppInfos,
-                                AppManagerActivity.this);
+                        adapter = new AppManagerAdapter(userAppInfos,systemAppInfos,AppManagerActivity.this);
                     }
                     mListView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
@@ -60,7 +56,17 @@ public class AppManagerActivity extends AppCompatActivity implements View.OnClic
         }
     };
 
-    private void initData(){
+
+
+    class UninstallRececiver extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //收到广播了
+            initData();
+        }
+    }
+
+    private void initData() {
         appInfos = new ArrayList<AppInfo>();
         new Thread(){
             @Override
@@ -69,8 +75,7 @@ public class AppManagerActivity extends AppCompatActivity implements View.OnClic
                 userAppInfos.clear();
                 systemAppInfos.clear();
                 appInfos.addAll(AppInfoParser.getAppInfos(AppManagerActivity.this));
-                for (AppInfo appInfo:appInfos){
-                    //如果是用户app
+                for (AppInfo appInfo:appInfos) {
                     if (appInfo.isUserApp){
                         userAppInfos.add(appInfo);
                     }else {
@@ -78,53 +83,39 @@ public class AppManagerActivity extends AppCompatActivity implements View.OnClic
                     }
                 }
                 mHandler.sendEmptyMessage(10);
+
             };
         }.start();
-    }
-
-    /**
-     * 接收应程序卸载广播
-     * @author admin
-     */
-    class UninstallReceiver extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            //收到广播了
-            initData();
-        }
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_manager);
-        //注册广播
-        receiver = new UninstallReceiver();
+        receciver = new UninstallRececiver();
         IntentFilter intentFilter = new IntentFilter(Intent.ACTION_PACKAGE_REMOVED);
         intentFilter.addDataScheme("package");
-        registerReceiver(receiver, intentFilter);
+        registerReceiver(receciver,intentFilter);
+
         initView();
     }
 
-    /** 初始化控件 */
-    private void initView(){
-        findViewById(R.id.rl_titlebar).setBackgroundColor(
-                getResources().getColor(R.color.bright_yellow));
-        ImageView mLeftImgv = (ImageView) findViewById(R.id.imgv_leftbtn);
+    private void initView() {
+        findViewById(R.id.rl_titlebar).setBackgroundColor(getResources().getColor(R.color.bright_yellow));
+        ImageView mLeftImagv = (ImageView) findViewById(R.id.imgv_leftbtn);
         ((TextView)findViewById(R.id.tv_title)).setText("软件管家");
-        mLeftImgv.setOnClickListener(this);
-        mLeftImgv.setImageResource(R.drawable.back);
+        mLeftImagv.setOnClickListener(this);
+        mLeftImagv.setImageResource(R.drawable.back);
+
         mPhoneMemoryTV = (TextView) findViewById(R.id.tv_phonememory_appmanager);
         mSDMemoryTV = (TextView) findViewById(R.id.tv_sdmemory_appmanager);
         mAppNumTV = (TextView) findViewById(R.id.tv_appnumber);
-        mListView = (ListView) findViewById(R.id.lv_appmanager);
-        //拿到手机剩余内存和SD卡剩余内存
+        mListView = (ListView) findViewById(R.id.tv_appmanager);
+
         getMemoryFromPhone();
         initData();
         initListener();
     }
-
 
     @Override
     public void onClick(View v) {
@@ -135,37 +126,41 @@ public class AppManagerActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
-    /** 拿到手机和SD卡剩余内存 */
     private void getMemoryFromPhone(){
         long avail_sd = Environment.getExternalStorageDirectory().getFreeSpace();
         long avail_rom = Environment.getDataDirectory().getFreeSpace();
-        //格式化内存
-        String str_avail_sd = Formatter.formatFileSize(this, avail_sd);
-        String str_avail_rom = Formatter.formatFileSize(this, avail_rom);
-        mPhoneMemoryTV.setText("剩余手机内存：" + str_avail_rom);
-        mSDMemoryTV.setText("剩余SD卡内存：" + str_avail_sd);
+
+        String str_avail_sd = Formatter.formatFileSize(this,avail_sd);
+        String str_avail_rom = Formatter.formatFileSize(this,avail_rom);
+        mPhoneMemoryTV.setText("剩余手机内存"+str_avail_rom);
+        mSDMemoryTV.setText("剩余SD卡内存"+str_avail_sd);
     }
 
-    public void initListener(){
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    private void initListener(){
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
+
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                if (adapter != null){
+                if (adapter !=null){
                     new Thread(){
                         @Override
                         public void run() {
+                            if(position ==0){
+                                //第0个位置显示的应该是 用户程序的个数的标签
+                                return;
+                            }else if (position == (userAppInfos.size()+1)){
+                                return;
+                            }
                             AppInfo mappInfo = (AppInfo) adapter.getItem(position);
-                            //记住当前条目的状态
                             boolean flag = mappInfo.isSelected;
-                            //先将集合中所有条目的AppInfo变为位选中状态
-                            for (AppInfo appInfo:userAppInfos){
+                            for (AppInfo appInfo : userAppInfos){
                                 appInfo.isSelected = false;
                             }
-                            for (AppInfo appInfo:systemAppInfos){
+                            for (AppInfo appInfo : systemAppInfos){
                                 appInfo.isSelected = false;
                             }
                             if (mappInfo != null){
-                                //如果已经选中，则变为未选中
                                 if (flag){
                                     mappInfo.isSelected = false;
                                 }else {
@@ -173,9 +168,11 @@ public class AppManagerActivity extends AppCompatActivity implements View.OnClic
                                 }
                                 mHandler.sendEmptyMessage(15);
                             }
-                        };
+
+                        }
                     }.start();
                 }
+
             }
         });
 
@@ -186,9 +183,11 @@ public class AppManagerActivity extends AppCompatActivity implements View.OnClic
             }
 
             @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (firstVisibleItem >= userAppInfos.size() + 1){
+            public void onScroll(AbsListView view, int i, int visibleItemCount, int totalItemCount) {
+                if(i >= userAppInfos.size()+1){
                     mAppNumTV.setText("系统程序："+systemAppInfos.size()+"个");
+
+
                 }else {
                     mAppNumTV.setText("用户程序："+userAppInfos.size()+"个");
                 }
@@ -198,8 +197,8 @@ public class AppManagerActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     protected void onDestroy() {
-        unregisterReceiver(receiver);
-        receiver = null;
+        unregisterReceiver(receciver);
+        receciver = null;
         super.onDestroy();
     }
 }
