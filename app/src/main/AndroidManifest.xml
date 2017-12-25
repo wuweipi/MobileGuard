@@ -105,6 +105,15 @@
 
         <activity android:name=".m8trafficmonitor.OperatorSetActivity" />
         <activity android:name=".m8trafficmonitor.TrafficMonitoringActivity"></activity>
+        <activity android:name=".m9advancedtools.AdvancedToolsActivity"/>
+
+        <activity android:name=".m9advancedtools.NumBelongtoActivity"/>
+
+        <activity android:name=".m9advancedtools.AppLockActivity"/>
+
+        <activity android:name=".m9advancedtools.EnterPswActivity"/>
+
+        <service android:name=".m9advancedtools.service.AppLockService" android:exported="true" android:enabled="true"/>
     </application>
 
 </manifest>
